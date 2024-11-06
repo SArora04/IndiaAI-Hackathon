@@ -1,0 +1,131 @@
+<!-- templates/complaint_form.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Form</title>
+    <style>
+        /* Basic styling for the form */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url('https://img.freepik.com/free-vector/abstract-secure-technology-background_23-2148331624.jpg?t=st=1730893019~exp=1730896619~hmac=a560b68b6df16f02b0650f15684dca8795a821e7827e0d0c3a32323dfeb9f65d&w=900'); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: rgba(0, 0, 0, 0.1); /* Slight transparency */
+            
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #complaint-form {
+            width: 100%;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+
+        textarea {
+            width: 96%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #3eb2f5;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+            display: none;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <form id="complaint-form" method="post" action="{% url 'classify_category' %}">
+            {% csrf_token %}
+            <label for="complaint_text">Enter your complaint:</label>
+            <textarea id="complaint_text" name="complaint_text" rows="4" cols="50" placeholder="Type your complaint here..."></textarea>
+            <button type="submit">Submit Complaint</button>
+        </form>
+
+        <div id="result"></div>
+
+        
+    </div>
+
+    <script>
+        document.getElementById('complaint-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const complaintText = document.getElementById('complaint_text').value;
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch("{% url 'classify_category' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken
+                },
+                body: new URLSearchParams({
+                    'complaint_text': complaintText
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                if (data.status === 'success') {
+                    resultDiv.innerText = `Category: ${data.category}`;
+                } else {
+                    resultDiv.innerText = `Error: ${data.message}`;
+                }
+                resultDiv.style.display = 'block';
+
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+</body>
+</html>
