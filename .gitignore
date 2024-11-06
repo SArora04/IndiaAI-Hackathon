@@ -1,0 +1,63 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment folder
+venv/
+env/
+bytebrigade/myenv/
+
+# Django secret key and settings
+*.env
+*.ini
+.env.local
+
+# Database files
+*.sqlite3
+db.sqlite3
+
+# Django and static/media files
+/staticfiles/
+/mediafiles/
+/media/
+
+# Logs and temporary files
+*.log
+*.pot
+*.pyc
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+*.pyd
+*.so
+*.dll
+*.dylib
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Coverage and testing files
+htmlcov/
+.coverage
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.hypothesis/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+
+# System files (macOS/Linux/Windows)
+*.DS_Store
+*.icloud
+Thumbs.db
