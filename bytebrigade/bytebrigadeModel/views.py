@@ -19,8 +19,6 @@ def classify_complaint_view(request):
             cleaned_complain_text = clean_text(complaint_text)
             prediction_modelResult = category_classification(cleaned_complain_text)
             category_modelResult, subcategory_modelResult = subcategory_classification(cleaned_complain_text,prediction_modelResult)
-            # Save the complaint to the database
-            #complaint = Complaint.objects.create(complaint_text=complaint_text, category=category)
 
             # Return the result as JSON
             return JsonResponse({'status': 'success', 'category': category_modelResult, 'sub-category': subcategory_modelResult})
