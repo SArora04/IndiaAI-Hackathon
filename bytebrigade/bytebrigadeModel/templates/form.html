@@ -116,9 +116,9 @@
             .then(data => {
                 const resultDiv = document.getElementById('result');
                 if (data.status === 'success') {
-                    resultDiv.innerText = `Category: ${data.category}`;
+                    resultDiv.innerHTML = `Category: ${data.category}  <br> Sub-Category: ${data['sub-category']}`;
                 } else {
-                    resultDiv.innerText = `Error: ${data.message}`;
+                    resultDiv.innerHTML = `Error: ${data.message}`;
                 }
                 resultDiv.style.display = 'block';
 

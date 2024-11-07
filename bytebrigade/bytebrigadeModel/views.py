@@ -22,7 +22,7 @@ def classify_complaint_view(request):
             #complaint = Complaint.objects.create(complaint_text=complaint_text, category=category)
 
             # Return the result as JSON
-            return JsonResponse({'status': 'success', 'category': category_modelResult})
+            return JsonResponse({'status': 'success', 'category': category_modelResult, 'sub-category': 'NA'})
 
         return JsonResponse({'status': 'error', 'message': 'No complaint text provided.'})
 
