@@ -139,16 +139,16 @@ def clean_text(text):
 
 def category_classification(complaint):
 
-    cleaned_complaints = [clean_text(text) for text in complaint]
+    # cleaned_complaints = [clean_text(text) for text in complaint]
 
-    print("Tyep : ", type(cleaned_complaints))
+    print("Tyep : ", type(complaint))
 
     model = keras.models.load_model('model/3_class_tfidfNeural.h5')
     tfidf_vectorizer = joblib.load('model/tfidf_vectorizer.pkl')
     selector = joblib.load('model/selector.pkl')
     svd = joblib.load('model/svd.pkl')
 
-    new_sequences = tfidf_vectorizer.transform(cleaned_complaints)
+    new_sequences = tfidf_vectorizer.transform([complaint])
     new_sequences_selected = selector.transform(new_sequences)
     new_sequences_reduced = svd.transform(new_sequences_selected)
     new_sequences_reduced = np.expand_dims(new_sequences_reduced, axis=2)
@@ -158,7 +158,7 @@ def category_classification(complaint):
 
 def subcategory_classification(complaint_text, predictions):
 
-    cleaned_complaints = [clean_text(text) for text in complaint_text]
+    # cleaned_complaints = [clean_text(text) for text in complaint_text]
 
 
     tfidf_vectorizer = joblib.load('model2/tfidf_vectorizer.pkl')
@@ -167,7 +167,7 @@ def subcategory_classification(complaint_text, predictions):
     svd = joblib.load('model2/svd.pkl')
     model = keras.models.load_model('model2/3_class_tfidfNeural.h5')
 
-    new_tfidf = tfidf_vectorizer.transform(cleaned_complaints)
+    new_tfidf = tfidf_vectorizer.transform([complaint_text])
 
     # Feature Selector
     new_selected = selector.transform(new_tfidf)
